@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI'ya Adım At - Geleceğe Yolculuk Başlasın</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --ink: #0f172a;
+            --muted: #475569;
+            --emerald: #10b981;
+            --emerald-strong: #059669;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            width: min(1200px, 92vw);
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: var(--ink);
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--emerald-strong);
+        }
+
+        .nav-cta {
+            padding: 0.65rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid var(--emerald);
+            color: #0b7a5a;
+            background: rgba(16, 185, 129, 0.12);
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .menu-toggle span,
+        .menu-toggle::before,
+        .menu-toggle::after {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--ink);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .menu-toggle::before,
+        .menu-toggle::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-toggle::before {
+            top: 16px;
+        }
+
+        .menu-toggle::after {
+            bottom: 16px;
+        }
+
+        .menu-toggle.active::before {
+            transform: translate(-50%, 6px) rotate(45deg);
+        }
+
+        .menu-toggle.active::after {
+            transform: translate(-50%, -6px) rotate(-45deg);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            padding: 140px 0 110px;
+            overflow: hidden;
+            background: radial-gradient(120% 120% at 80% 0%, rgba(16, 185, 129, 0.16), transparent 50%), linear-gradient(180deg, #ecfdf3 0%, #ffffff 100%);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            z-index: 0;
+        }
+
+        .hero::before {
+            background: #a7f3d0;
+            top: -120px;
+            left: -120px;
+        }
+
+        .hero::after {
+            background: #bbf7d0;
+            bottom: -160px;
+            right: -100px;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 2.5rem;
+        }
+
+        .hero-text {
+            display: grid;
+            gap: 1.3rem;
+            max-width: 760px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(15, 150, 105, 0.12);
+            color: var(--emerald-strong);
+            font-weight: 600;
+            width: fit-content;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 4vw + 1rem, 3.6rem);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .lead {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 680px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.95rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-strong));
+            color: #ffffff;
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 24px 50px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-ghost {
+            background: rgba(15, 23, 42, 0.04);
+            color: var(--ink);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(15, 23, 42, 0.08);
+        }
+
+        /* Sections */
+        section {
+            padding: clamp(64px, 8vw, 120px) 0;
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 2vw + 1rem, 2.6rem);
+            letter-spacing: -0.015em;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            gap: 1.4rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 0.8rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+        }
+
+        .icon-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--emerald-strong);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .card h3, .card h4 {
+            font-size: 1.2rem;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        /* Benefits */
+        .benefits {
+            background: linear-gradient(180deg, #0b1727 0%, #0f172a 100%);
+            color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(80% 80% at 20% 20%, rgba(16, 185, 129, 0.2), transparent 50%);
+            pointer-events: none;
+        }
+
+        .benefits .section-header h2 {
+            color: #f8fafc;
+        }
+
+        .benefits .section-header p {
+            color: #cbd5e1;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            box-shadow: none;
+        }
+
+        .benefit-card h4 {
+            color: #a7f3d0;
+            font-size: 1.1rem;
+        }
+
+        .benefit-card:hover {
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+            transform: translateY(-4px);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            background: var(--surface);
+        }
+
+        .final-cta .cta-box {
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-strong));
+            color: #ffffff;
+            border-radius: calc(var(--radius) + 4px);
+            padding: clamp(32px, 6vw, 48px);
+            box-shadow: 0 26px 60px rgba(16, 185, 129, 0.28);
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2.1rem, 2vw + 1rem, 2.6rem);
+            margin-bottom: 1rem;
+        }
+
+        .final-cta p {
+            margin: 0 auto 1.6rem;
+            max-width: 640px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            width: min(1180px, 100%);
+            max-height: min(90vh, 900px);
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-header p {
+            color: var(--muted);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.2rem;
+            top: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.06);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .category {
+            padding: 1.4rem;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #f9fbfd;
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--ink);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .usage-grid {
+            display: grid;
+            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        }
+
+        .usage-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 1.1rem;
+            box-shadow: none;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .usage-item:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .usage-item h4 {
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+            color: var(--emerald-strong);
+        }
+
+        .usage-item p {
+            color: var(--muted);
+            font-size: 0.98rem;
+        }
+
+        .usage-example {
+            margin-top: 0.35rem;
+            font-size: 0.92rem;
+            color: #0f172a;
+            font-style: italic;
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient dots */
+        .ambient {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ambient span {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.25);
+            animation: float 9s ease-in-out infinite;
+        }
+
+        .ambient span:nth-child(1) { top: 12%; left: 10%; animation-delay: 0s; }
+        .ambient span:nth-child(2) { top: 28%; right: 8%; animation-delay: 1s; width: 14px; height: 14px; }
+        .ambient span:nth-child(3) { bottom: 16%; left: 18%; animation-delay: 2s; width: 12px; height: 12px; }
+        .ambient span:nth-child(4) { bottom: 8%; right: 16%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); opacity: 0.9; }
+            50% { transform: translateY(-16px); opacity: 0.6; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                padding-top: 120px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 0;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 72px;
+                right: 4vw;
+                width: calc(100% - 8vw);
+                flex-direction: column;
+                align-items: flex-start;
+                background: #ffffff;
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                display: none;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+                position: relative;
+            }
+
+            .hero {
+                padding-top: 110px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            section {
+                padding: 64px 0;
+            }
+
+            .modal {
+                padding: 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header id="site-header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">AI Gelecek</a>
+                <button class="menu-toggle" aria-label="Menüyü aç/kapat" aria-expanded="false">
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#features">Özellikler</a></li>
+                    <li><a href="#benefits">Faydalar</a></li>
+                    <li><a href="#start">Başla</a></li>
+                    <li><a class="nav-cta" href="#usage" onclick="openModal(); return false;">Kullanım Alanları</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero section -->
+        <section class="hero">
+            <div class="ambient" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="container hero-grid">
+                <div class="hero-text reveal">
+                    <span class="eyebrow">AI ile Geleceğe Hazırlanın</span>
+                    <h1>Yapay Zeka ile Geleceği Şekillendir</h1>
+                    <p class="lead">Hayatınızı kolaylaştıran, işinizi hızlandıran ve yaratıcılığınızı artıran AI araçlarını keşfedin. Milyonlarca insan zaten kullanıyor, sıra sizde!</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="openModal()">Hemen Keşfet</button>
+                        <a class="btn btn-ghost" href="#features">Öne çıkan özellikleri gör</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features section -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Neden Yapay Zeka Kullanmalısınız?</h2>
+                    <p>Hız, akıl ve kişiselleştirme bir arada: günlük işlerinizi otomatikleştirin, daha yaratıcı olun ve zamandan kazanın.</p>
+                </div>
+                <div class="card-grid">
+                    <article class="card reveal">
+                        <span class="icon-badge" aria-hidden="true">⚡</span>
+                        <h3>Süper Hız</h3>
+                        <p class="muted">Saatler süren işleri dakikalarda tamamlayın. AI, rutin işlerinizi otomatikleştirerek size değerli zamanınızı geri verir.</p>
+                    </article>
+                    <article class="card reveal">
+                        <span class="icon-badge" aria-hidden="true">🧠</span>
+                        <h3>Akıllı Çözümler</h3>
+                        <p class="muted">Karmaşık problemleri çözün, yaratıcı fikirler üretin ve daha iyi kararlar alın. AI, kişisel danışmanınız gibi.</p>
+                    </article>
+                    <article class="card reveal">
+                        <span class="icon-badge" aria-hidden="true">🎯</span>
+                        <h3>Kişiselleştirilmiş Deneyim</h3>
+                        <p class="muted">Size özel öneriler alın, kişiselleştirilmiş içerikler oluşturun ve ihtiyaçlarınıza tam uygun çözümler bulun.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits section -->
+        <section class="benefits" id="benefits">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>AI ile Hayatınız Nasıl Değişir?</h2>
+                    <p>İşten eğitime, yaratıcılıktan günlük hayata kadar her alanda hız ve verimlilik kazanın.</p>
+                </div>
+                <div class="card-grid">
+                    <article class="card benefit-card reveal">
+                        <h4>İş Hayatında</h4>
+                        <p>Raporlarınızı otomatik oluşturun, e-postalarınızı akıllıca yanıtlayın, proje planlaması yapın ve verimliliğinizi %300 artırın.</p>
+                    </article>
+                    <article class="card benefit-card reveal">
+                        <h4>Yaratıcılıkta</h4>
+                        <p>Logo tasarlayın, içerik üretin, müzik besteleyin, video editleyin. Hayal ettiğiniz her şeyi AI ile hayata geçirin.</p>
+                    </article>
+                    <article class="card benefit-card reveal">
+                        <h4>Öğrenmede</h4>
+                        <p>Kişisel öğretmeniniz olsun, yeni diller öğrenin, karmaşık konuları basitleştirin ve bilginizi sürekli geliştirin.</p>
+                    </article>
+                    <article class="card benefit-card reveal">
+                        <h4>Günlük Hayatta</h4>
+                        <p>Yemek tarifleri bulun, seyahat planları yapın, alışveriş listesi oluşturun ve ev işlerinizi organize edin.</p>
+                    </article>
+                    <article class="card benefit-card reveal">
+                        <h4>Para Kazanmada</h4>
+                        <p>Freelance işler yapın, online iş kurun, pazarlama stratejileri geliştirin ve gelir kaynaklarınızı çoğaltın.</p>
+                    </article>
+                    <article class="card benefit-card reveal">
+                        <h4>Gelecekte</h4>
+                        <p>AI teknolojisinde önde olun, rekabette avantaj sağlayın ve gelecekteki fırsatları kaçırmayın.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final call-to-action -->
+        <section class="final-cta" id="start">
+            <div class="container">
+                <div class="cta-box reveal">
+                    <h2>Artık Beklemenin Zamanı Değil!</h2>
+                    <p>Her geçen gün AI kullanmayan insanlar geride kalıyor. Siz de bu devrime katılın ve geleceğinizi bugünden şekillendirin. Ücretsiz başlayın!</p>
+                    <button class="btn btn-primary" onclick="openModal()">Şimdi Başla - Ücretsiz</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal: AI usage areas -->
+    <div id="usageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="usageTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <button class="modal-close" aria-label="Kapat" onclick="closeModal()">&times;</button>
+                <h2 id="usageTitle">AI - ChatGPT Kullanım Alanları</h2>
+                <p>ChatGPT ile hayatınızın her alanında verimlilik artırın</p>
+            </div>
+            <div class="modal-body">
+                <div class="category">
+                    <div class="category-title">💼 İş ve Kariyer</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>E-posta Yazılımı</h4>
+                            <p>Profesyonel e-postalar, iş teklifleri ve resmi yazışmalar oluşturun.</p>
+                            <div class="usage-example">Örnek: "Müşteri şikayetine yanıt e-postası yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>CV ve Özgeçmiş</h4>
+                            <p>Etkileyici CV'ler, ön yazılar ve LinkedIn profilleri hazırlayın.</p>
+                            <div class="usage-example">Örnek: "Yazılım geliştirici için CV özeti yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Sunum Hazırlama</h4>
+                            <p>PowerPoint sunumlar, pitch decks ve iş planları oluşturun.</p>
+                            <div class="usage-example">Örnek: "Yeni ürün lansmanı için sunum ana hatları"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">📝 İçerik Üretimi</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Blog Yazıları</h4>
+                            <p>SEO uyumlu blog yazıları, makaleler ve web içerikleri üretin.</p>
+                            <div class="usage-example">Örnek: "Yapay zeka hakkında 1000 kelimelik makale"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Sosyal Medya</h4>
+                            <p>Instagram, Twitter, LinkedIn için yaratıcı içerikler oluşturun.</p>
+                            <div class="usage-example">Örnek: "Instagram için motivasyon postu yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Video Senaryoları</h4>
+                            <p>YouTube videoları, reklam senaryoları ve podcast içerikleri yazın.</p>
+                            <div class="usage-example">Örnek: "5 dakikalık teknoloji videosu senaryosu"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">📚 Eğitim ve Öğrenme</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Konu Açıklaması</h4>
+                            <p>Karmaşık konuları basit dille anlayın ve öğrenin.</p>
+                            <div class="usage-example">Örnek: "Kuantum fiziği temellerini basitçe açıkla"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Dil Öğrenme</h4>
+                            <p>Yabancı dil pratiği yapın, çeviri ve dilbilgisi öğrenin.</p>
+                            <div class="usage-example">Örnek: "İngilizce iş görüşmesi diyalogu oluştur"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Sınav Hazırlığı</h4>
+                            <p>Test soruları, özet notlar ve çalışma planları hazırlayın.</p>
+                            <div class="usage-example">Örnek: "Matematik sınavı için 50 soru oluştur"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">💻 Programlama ve Teknoloji</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Kod Yazılımı</h4>
+                            <p>Python, JavaScript, HTML/CSS kodları yazın ve optimize edin.</p>
+                            <div class="usage-example">Örnek: "E-ticaret sitesi için sepet fonksiyonu yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Hata Ayıklama</h4>
+                            <p>Kodunuzdaki hataları bulun ve düzeltin.</p>
+                            <div class="usage-example">Örnek: "Bu JavaScript kodundaki hatayı bul"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Teknik Dokümantasyon</h4>
+                            <p>API dokümanları, kullanım kılavuzları hazırlayın.</p>
+                            <div class="usage-example">Örnek: "REST API için kullanım kılavuzu yaz"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">🏡 Günlük Hayat</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Yemek Tarifleri</h4>
+                            <p>Malzemelerinize göre yemek tarifleri ve menü önerileri alın.</p>
+                            <div class="usage-example">Örnek: "Evdeki malzemelerle akşam yemeği öner"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Seyahat Planı</h4>
+                            <p>Tatil planları, gezi rotaları ve otel önerileri oluşturun.</p>
+                            <div class="usage-example">Örnek: "İstanbul'da 3 günlük gezi rotası hazırla"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Alışveriş Listesi</h4>
+                            <p>Bütçe dostu alışveriş listeleri ve tasarruf önerileri alın.</p>
+                            <div class="usage-example">Örnek: "Haftalık sağlıklı beslenme listesi"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">🚀 İş Fikirleri ve Gelir</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Online İş Fikirleri</h4>
+                            <p>Kendi iş fikrinizi geliştirin ve iş planı oluşturun.</p>
+                            <div class="usage-example">Örnek: "Ev hanımları için online iş fikirleri"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Freelance Projeler</h4>
+                            <p>Upwork, Fiverr için hizmet paketleri ve teklifler yazın.</p>
+                            <div class="usage-example">Örnek: "Grafik tasarım hizmeti tanıtımı yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Pazarlama Stratejileri</h4>
+                            <p>Sosyal medya pazarlaması ve müşteri kazanma stratejileri.</p>
+                            <div class="usage-example">Örnek: "Küçük işletme için pazarlama planı"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-title">🎨 Yaratıcılık ve Sanat</div>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <h4>Hikaye Yazılımı</h4>
+                            <p>Kısa hikayeler, roman ana hatları ve karakter geliştirme.</p>
+                            <div class="usage-example">Örnek: "Bilim kurgu kısa hikayesi yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Şiir ve Şarkı</h4>
+                            <p>Kişisel şiirler, şarkı sözleri ve rap yazın.</p>
+                            <div class="usage-example">Örnek: "Aşk temalı şiir yaz"</div>
+                        </div>
+                        <div class="usage-item">
+                            <h4>Oyun Fikirleri</h4>
+                            <p>Masa oyunları, video oyun konseptleri ve bulmacalar.</p>
+                            <div class="usage-example">Örnek: "Aile için eğlenceli masa oyunu tasarla"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation: mobile toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            menuToggle.classList.toggle('active', isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close mobile nav after clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('open')) {
+                    navLinks.classList.remove('open');
+                    menuToggle.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // Header shadow on scroll
+        const siteHeader = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            siteHeader.classList.toggle('scrolled', window.scrollY > 12);
+        });
+
+        // Modal: open/close helpers
+        const modal = document.getElementById('usageModal');
+        function openModal() {
+            modal.classList.add('open');
+            document.body.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on background click
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+
+        // Scroll-in reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        createChat({
+            webhookUrl: 'https://sigorta.app.n8n.cloud/webhook/9f994106-9aea-438d-896f-d723b7a88e73/chat',
+            defaultLanguage: 'tr',
+            i18n: {
+                tr: {
+                    title: 'Merhaba! 👋',
+                    subtitle: 'Sorularınızı yanıtlamak için buradayız.',
+                    footer: '',
+                    getStarted: 'Yeni sohbet',
+                    inputPlaceholder: 'Sorunuzu yazın...',
+                    closeButtonTooltip: 'Kapat'
+                }
+            },
+            initialMessages: ['Merhaba! 👋', 'Nasıl yardımcı olabilirim?']
+        });
+    </script>
+</body>
+</html>
